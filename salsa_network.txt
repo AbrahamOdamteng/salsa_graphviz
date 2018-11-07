@@ -1,0 +1,54 @@
+//dot -Gdpi=200 -T jpeg -o salsa_network.jpeg salsa_network.txt
+digraph finite_state_machine {
+    
+	rankdir=LR;
+	size="8,5"
+
+    // Stances-----------------------------------------------------------
+    node [shape = doublecircle]; 
+    closed_hold[label = "Closed Hold"] 
+    open_hold[label = "Open Hold\n(Parallel)"];
+    lr_open_hold [label = "Open Hold\n(Left-to-Right)"];
+    rl_open_hold [label = "Open Hold\n(Right-to-Left)"];
+    hammer_lock  [label = "Hammer Lock"];
+    
+    //moves-----------------------------------------------------------
+    node [shape = circle]; 
+    cross_body[label = "Cross body"] 
+    cuban_walkthrough[label = "Cuban\nWalkthrough"];
+    right_turn [label = "Right Turn"];
+    rocking_step  [label = "Rocking Step"];
+    double_spin  [label = "double spin"];
+    round_the_world  [label = "Round the World"];
+    
+    //-----------------------------------------------------------
+    closed_hold -> rocking_step;
+    closed_hold -> double_spin;
+    closed_hold -> cuban_walkthrough;
+    closed_hold -> cross_body;
+    closed_hold -> rl_open_hold;
+    
+    cross_body -> closed_hold;
+    cross_body -> open_hold;
+    cross_body -> lr_open_hold;
+    
+    rocking_step -> closed_hold;
+    rocking_step -> lr_open_hold;
+    
+    open_hold -> hammer_lock;
+    open_hold -> right_turn;
+    double_spin -> lr_open_hold;
+    double_spin -> hammer_lock;
+    rl_open_hold->double_spin;
+    lr_open_hold -> round_the_world;
+    
+    cuban_walkthrough  -> lr_open_hold;
+   
+    right_turn -> open_hold;
+    
+    round_the_world -> closed_hold;
+    round_the_world -> lr_open_hold;
+    round_the_world -> rl_open_hold;
+    round_the_world -> open_hold;
+    
+}

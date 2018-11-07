@@ -1,11 +1,41 @@
 digraph finite_state_machine {
+
 	rankdir=LR;
 	size="8,5"
-	node [shape = doublecircle]; closed_hold open_hold[label = "open hold(Parallel)"]  LR_8;
+	node [shape = doublecircle]; 
+        closed_hold[label = "Closed Hold"] 
+        open_hold[label = "Open Hold\n(Parallel)"];
+        lr_open_hold [label = "Open Hold\n(Left-to-Right)"];
+        hammer_lock  [label = "Hammer Lock"];
+        
+            overlap = false;
+    splines = true;
+    concentrate=true;
+        
 	node [shape = circle];
+    // Self Moves================================================
+    
     closed_hold -> closed_hold [ label = "Cross Body" ];
+    closed_hold -> closed_hold [ label = "Rocking Step" ];
+    closed_hold -> closed_hold [ label = "Cross Pass" ];
+    
+    closed_hold -> closed_hold [ label = "Cross Body Inside Turn" ];
+    closed_hold -> closed_hold [ label = "Cross Body 180" ];
+    
     open_hold -> open_hold [ label = "Cross Body" ];
+    open_hold -> open_hold [ label = "Right Turn" ];
+    lr_open_hold -> lr_open_hold [ label = "Cross Body" ];
+    lr_open_hold -> lr_open_hold [ label = "Cuban Walkthrough" ];
+    
+
+    //==========================================================
 	closed_hold -> open_hold [ label = "Cross Body" ];
+	closed_hold -> lr_open_hold [ label = "Cross Body" ];
+    closed_hold -> lr_open_hold [ label = "Rocking Step" ];    
+    closed_hold -> lr_open_hold [ label = "Cuban Walkthrough" ];
+    
+    open_hold -> hammer_lock [label = "Right Turn into Hammer Lock"]
+    
 	/*LR_0 -> LR_1 [ label = "SS(S)" ];
 	LR_1 -> LR_3 [ label = "S($end)" ];
 	LR_2 -> LR_6 [ label = "SS(b)" ];
