@@ -21,7 +21,7 @@ digraph finite_state_machine {
     rocking_step  [label = "Rocking Step"];
     double_spin  [label = "double spin"];
     round_the_world  [label = "Round the World"];
-    embrace  [label = "embrace"];
+    embrace  [label = "copa\nembrace"];
     
     //-----------------------------------------------------------
     closed_hold -> rocking_step;
