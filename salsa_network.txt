@@ -5,7 +5,7 @@ digraph finite_state_machine {
 	size="8,5"
 
     // Stances-----------------------------------------------------------
-    node [shape = doublecircle]; 
+    node [shape = record, style = rounded]; 
     closed_hold[label = "Closed Hold"] 
     open_hold[label = "Open Hold\n(Parallel)"];
     lr_open_hold [label = "Open Hold\n(Left-to-Right)"];
@@ -13,30 +13,33 @@ digraph finite_state_machine {
     hammer_lock  [label = "Hammer Lock"];
     
     //moves-----------------------------------------------------------
-    node [shape = circle]; 
+    node [shape = doublecircle]; 
     cross_body[label = "Cross body"] 
     cuban_walkthrough[label = "Cuban\nWalkthrough"];
     right_turn [label = "Right Turn"];
     rocking_step  [label = "Rocking Step"];
     double_spin  [label = "double spin"];
     round_the_world  [label = "Round the World"];
+    embrace  [label = "embrace"];
     
     //-----------------------------------------------------------
     closed_hold -> rocking_step;
     closed_hold -> double_spin;
     closed_hold -> cuban_walkthrough;
     closed_hold -> cross_body;
-    closed_hold -> rl_open_hold;
     
     cross_body -> closed_hold;
     cross_body -> open_hold;
     cross_body -> lr_open_hold;
+    
+    lr_open_hold -> cuban_walkthrough;
     
     rocking_step -> closed_hold;
     rocking_step -> lr_open_hold;
     
     open_hold -> hammer_lock;
     open_hold -> right_turn;
+    open_hold -> embrace;
     double_spin -> lr_open_hold;
     double_spin -> hammer_lock;
     rl_open_hold->double_spin;
