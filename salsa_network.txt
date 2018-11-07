@@ -3,6 +3,7 @@ digraph finite_state_machine {
     
 	rankdir=LR;
 	size="8,5"
+    splines = true;
 
     // Stances-----------------------------------------------------------
     node [shape = record, style = rounded]; 
@@ -40,6 +41,9 @@ digraph finite_state_machine {
     open_hold -> hammer_lock;
     open_hold -> right_turn;
     open_hold -> embrace;
+    
+    lr_open_hold -> right_turn;
+    
     double_spin -> lr_open_hold;
     double_spin -> hammer_lock;
     rl_open_hold->double_spin;
