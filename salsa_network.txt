@@ -11,17 +11,22 @@ digraph finite_state_machine {
     open_hold[label = "Open Hold\n(Parallel)"];
     lr_open_hold [label = "Open Hold\n(Left-to-Right)"];
     rl_open_hold [label = "Open Hold\n(Right-to-Left)"];
+    rr_open_hold [label = "Open Hold\n(Right-to-Right)"];
     hammer_lock  [label = "Hammer Lock"];
     
     //moves-----------------------------------------------------------
     node [shape = doublecircle]; 
-    cross_body[label = "Cross body"] 
+    cross_body[label = "Cross\nbody"] 
     cuban_walkthrough[label = "Cuban\nWalkthrough"];
     right_turn [label = "Right Turn"];
-    rocking_step  [label = "Rocking Step"];
-    double_spin  [label = "double spin"];
-    round_the_world  [label = "Round the World"];
-    embrace  [label = "copa\nembrace"];
+    rocking_step  [label = "Rocking\nStep"];
+    double_spin  [label = "double\nspin"];
+    round_the_world  [label = "Round\nthe World"];
+    embrace  [label = "copa\nembrace", color= "red"];
+    cross_body_s_sturn [label = "Cross Body\nS-Turn", color= "green"];
+    s_turn [label = "S-Turn", color= "green"];
+    copa_s_turn [label = "Copa\nS-Turn", color= "green"];
+    
     
     //-----------------------------------------------------------
     closed_hold -> rocking_step;
@@ -32,6 +37,7 @@ digraph finite_state_machine {
     cross_body -> closed_hold;
     cross_body -> open_hold;
     cross_body -> lr_open_hold;
+    cross_body -> rr_open_hold;
     
     lr_open_hold -> cuban_walkthrough;
     
@@ -46,7 +52,13 @@ digraph finite_state_machine {
     
     double_spin -> lr_open_hold;
     double_spin -> hammer_lock;
+    
     rl_open_hold->double_spin;
+    rl_open_hold -> s_turn;
+    
+    rr_open_hold -> cross_body_s_sturn;    
+    rr_open_hold -> double_spin; 
+    rr_open_hold -> copa_s_turn;
     lr_open_hold -> round_the_world;
     
     cuban_walkthrough  -> lr_open_hold;
