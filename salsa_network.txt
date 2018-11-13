@@ -7,12 +7,12 @@ digraph finite_state_machine {
 
     // Stances-----------------------------------------------------------
     node [shape = record, style = rounded]; 
-    closed_hold[label = "Closed Hold"] 
-    open_hold[label = "Open Hold\n(Parallel)"];
     ll_open_hold [label = "Open Hold\n(Left-to-Left)"];
     lr_open_hold [label = "Open Hold\n(Left-to-Right)"];
+    closed_hold[label = "Closed Hold"] 
     rl_open_hold [label = "Open Hold\n(Right-to-Left)"];
     rr_open_hold [label = "Open Hold\n(Right-to-Right)"];
+    open_hold[label = "Open Hold\n(Parallel)"];
     hammer_lock  [label = "Hammer Lock"];
     
     //moves-----------------------------------------------------------
@@ -22,9 +22,9 @@ digraph finite_state_machine {
     right_turn [label = "Right Turn"];
     rocking_step  [label = "Rocking\nStep"];
     double_spin  [label = "double\nspin"];
-    cross_body_s_sturn [label = "Cross Body\nS-Turn", color= "green"];
-    s_turn [label = "S-Turn", color= "green"];
-    copa_s_turn [label = "Copa\nS-Turn", color= "green"];
+    cross_body_s_sturn [label = "Cross Body\nS-Turn", color= "black"];
+    s_turn [label = "S-Turn", color= "black"];
+    copa_s_turn [label = "Copa\nS-Turn", color= "black"];
     round_the_world  [label = "Round\nthe World"];
     embrace  [label = "copa\nembrace", color= "red"];
     
@@ -36,16 +36,19 @@ digraph finite_state_machine {
     closed_hold -> cross_body;
     
     //S-Turns-----------------------------------------------------------
-    rl_open_hold -> s_turn [color="green"];
-    ll_open_hold -> s_turn [color="green"];
-    rr_open_hold -> cross_body_s_sturn [color="green"];
-    lr_open_hold -> cross_body_s_sturn [color="green"];
+    rl_open_hold -> s_turn [color="black"];
+    ll_open_hold -> s_turn [color="black"];
+    rr_open_hold -> cross_body_s_sturn [color="black"];
+    lr_open_hold -> cross_body_s_sturn [color="black"];
     
-    rr_open_hold -> copa_s_turn [color="green"];
-    ll_open_hold -> copa_s_turn [color="green"];
-    rl_open_hold -> copa_s_turn [color="green"];
-    lr_open_hold -> copa_s_turn [color="green"];
+    rr_open_hold -> copa_s_turn [color="black"];
+    ll_open_hold -> copa_s_turn [color="black"];
+    rl_open_hold -> copa_s_turn [color="black"];
+    lr_open_hold -> copa_s_turn [color="black"];
     
+    s_turn -> hammer_lock;
+    cross_body_s_sturn -> hammer_lock;
+    copa_s_turn -> hammer_lock;
     
     cross_body -> closed_hold;
     cross_body -> open_hold;
