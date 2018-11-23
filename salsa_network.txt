@@ -1,40 +1,44 @@
 //dot -Gdpi=200 -T jpeg -o salsa_network.jpeg salsa_network.txt
 digraph finite_state_machine {
-    
+    concentrate=true;
 	rankdir=LR;
 	size="8,5"
     splines = true;
 
-    // Stances-----------------------------------------------------------
+    //Stances====================================================
     node [shape = record, style = rounded]; 
-    lr_open_hold [label = "Open Hold\n(Left-to-Right)"];
-    ll_open_hold [label = "Open Hold\n(Left-to-Left)"];
-    rl_open_hold [label = "Open Hold\n(Right-to-Left)"];
-    rr_open_hold [label = "Open Hold\n(Right-to-Right)"];
-    open_hold[label = "Open Hold\n(Parallel)"];
+    //-----------------------------------------------------------
+    closed_hold               [label = "Closed Hold"] 
+    open_hold                 [label = "Open Hold\n(Parallel)"];
+    open_hold_ll              [label = "Open Hold\n(Left-to-Left)"];
+    open_hold_lr              [label = "Open Hold\n(Left-to-Right)"];
+    open_hold_rl              [label = "Open Hold\n(Right-to-Left)"];
+    open_hold_rr              [label = "Open Hold\n(Right-to-Right)"];
+    cross_hold_lot            [label = "Cross Hold\n(left-on-top)"];
     
-    hammer_lock_right_to_left  [label = "Hammer Lock\n(Right-to-Left)"];
-    hammer_lock_left_to_right  [label = "Hammer Lock\n(Left-to-Right)"];
-    hammer_lock_right_to_right [label = "Hammer Lock\n(Right-to-Right)"];
-    hammer_lock_left_to_left   [label = "Hammer Lock\n(Left-to-Left)"];
+    hammer_lock_right_to_left [label = "Hammer Lock\n(Right-to-Left)"];
+    hammer_lock_left_to_right [label = "Hammer Lock\n(Left-to-Right)", color="red"];
+    hammer_lock_right_to_right[label = "Hammer Lock\n(Right-to-Right)"];
+    hammer_lock_left_to_left  [label = "Hammer Lock\n(Left-to-Left)", color="red"];
+    arm_lock                  [label = "Arm Lock",color="red"];
     
-    closed_hold [label = "Closed Hold"] 
-    arm_lock  [label = "Arm Lock"];
-    
-    //moves-----------------------------------------------------------
+    //moves======================================================
     node [shape = doublecircle]; 
-    cross_body[label = "Cross\nbody"] 
-    cuban_walkthrough[label = "Cuban\nWalkthrough"];
-    cuban_left_turn  [label = "Cuban Left Turn", color= "black"];
-    right_turn_one_hand [label = "Right Turn\nOne Hand"];
-    right_turn_two_hand [label = "Right Turn\nTwo hand"];
-    rocking_step  [label = "Rocking\nStep"];
-    double_spin  [label = "double\nspin"];
-    cross_body_s_sturn [label = "Cross Body\nS-Turn", color= "black"];
-    s_turn [label = "S-Turn", color= "black"];
-    //copa_s_turn [label = "Copa\nS-Turn", color= "black"];
-    round_the_world  [label = "Round\nthe World"];
-    embrace  [label = "copa\nembrace", color= "red"];
+    //-----------------------------------------------------------
+    cross_body                [label = "Cross\nbody"] 
+    cuban_walkthrough         [label = "Cuban\nWalkthrough"];
+    cuban_left_turn           [label = "Cuban\nWalkthrough\nLeft Turn", color= "black"];
+    right_turn_two_hand       [label = "Right Turn\n(Two hand)"];
+    right_turn_one_hand       [label = "Right Turn\n(One Hand)"];
+    rocking_step              [label = "Rocking\nStep"];
+    double_spin_right_to_right[label = "Double Spin\n(right-to-right)"];
+    double_spin_right_to_left [label = "Double Spin\n(right-to-left)"];
+    cross_body_s_sturn        [label = "Cross Body\nS-Turn", color= "black"];
+    s_turn                    [label = "S-Turn", color= "black"];
+    copa_s_turn               [label = "Copa\nS-Turn", color= "black"];
+    round_the_world           [label = "Round\nthe World"];
+    embrace                   [label = "copa\nembrace", color= "red"];
+    copa_check                [label = "Copa Check", color= "black"];
         
     //-----------------------------------------------------------
     closed_hold -> rocking_step;
@@ -44,19 +48,22 @@ digraph finite_state_machine {
     //-----------------------------------------------------------
     cross_body -> closed_hold;
     cross_body -> open_hold;
-    cross_body -> ll_open_hold;
-    cross_body -> rr_open_hold;
-    cross_body -> lr_open_hold;
-    cross_body -> rl_open_hold;
+    cross_body -> open_hold_ll;
+    cross_body -> open_hold_rr;
+    cross_body -> open_hold_lr;
+    cross_body -> open_hold_rl;
+    cross_body -> cross_hold_lot;
     
     //-----------------------------------------------------------
     rocking_step -> closed_hold;
-    rocking_step -> lr_open_hold;
+    rocking_step -> open_hold_lr;
+    rocking_step -> open_hold_rl;
+    rocking_step -> open_hold;
     
     //-----------------------------------------------------------
     round_the_world -> closed_hold;
-    round_the_world -> lr_open_hold;
-    round_the_world -> rl_open_hold;
+    round_the_world -> open_hold_lr;
+    round_the_world -> open_hold_rl;
     round_the_world -> open_hold;
     
     //-----------------------------------------------------------
@@ -65,36 +72,48 @@ digraph finite_state_machine {
     open_hold -> right_turn_two_hand;
     open_hold -> cuban_left_turn;
     
+    //-----------------------------------------------------------    
+    open_hold_lr -> cuban_walkthrough;
+    open_hold_lr -> right_turn_one_hand;
+    open_hold_lr -> round_the_world;
+    
+    //S-Turns----------------------------------------------------
+    open_hold_rl -> s_turn [color="black"];
+    open_hold_rl -> double_spin_right_to_left;
+    open_hold_rl -> copa_s_turn [color="black"];
+    
     //-----------------------------------------------------------
     right_turn_two_hand -> arm_lock;
     right_turn_two_hand-> hammer_lock_right_to_left;
+
+    //-----------------------------------------------------------    
+    double_spin_right_to_right -> open_hold_lr;
+    double_spin_right_to_right -> hammer_lock_right_to_left;
+    double_spin_right_to_right -> open_hold_rr;
     
-    //S-Turns-----------------------------------------------------------
-    rl_open_hold -> s_turn [color="black"];
-    ll_open_hold -> s_turn [color="black"];
-    rr_open_hold -> cross_body_s_sturn [color="black"];
-    lr_open_hold -> cross_body_s_sturn [color="black"];
+    
+    open_hold_ll -> s_turn [color="black"];
+    open_hold_rr -> cross_body_s_sturn [color="black"];
+    open_hold_lr -> cross_body_s_sturn [color="black"];
         
     s_turn -> hammer_lock_right_to_left;
     cross_body_s_sturn -> hammer_lock_right_to_right;
+    cross_body_s_sturn -> hammer_lock_left_to_right;
 
     
-    lr_open_hold -> cuban_walkthrough;
-    lr_open_hold -> right_turn_one_hand;
-    lr_open_hold -> round_the_world;
-    double_spin -> lr_open_hold;
-    double_spin -> hammer_lock_right_to_left;
-    rl_open_hold->double_spin;
-    rr_open_hold -> double_spin; 
-    cuban_walkthrough  -> lr_open_hold;
+    open_hold_rr -> double_spin_right_to_right; 
+    cuban_walkthrough  -> open_hold_lr;
     right_turn_one_hand -> open_hold;  
+    right_turn_one_hand -> open_hold_lr;
     cuban_left_turn -> hammer_lock_left_to_right;
-    
+    double_spin_right_to_left -> hammer_lock_right_to_left;
+    cross_hold_lot -> copa_check;
+    copa_check -> hammer_lock_left_to_left;
+
   /*
     copa_s_turn -> hammer_lock_right_to_left;
-    rr_open_hold -> copa_s_turn [color="black"];
-    ll_open_hold -> copa_s_turn [color="black"];
-    rl_open_hold -> copa_s_turn [color="black"];
-    lr_open_hold -> copa_s_turn [color="black"];*/
+    open_hold_rr -> copa_s_turn [color="black"];
+    open_hold_ll -> copa_s_turn [color="black"];
+    open_hold_lr -> copa_s_turn [color="black"];*/
     
 }
