@@ -23,6 +23,13 @@ digraph finite_state_machine {
     arm_lock                  [label = "Arm Lock",color="black"];
     follower_check_east       [label = "Follower Check\n(East)",color="black"];
     
+    //3-step moves======================================================
+    node [shape = circle, style=""]; 
+    //-----------------------------------------------------------
+    //hammer_lock_wave          [label = "Hammer-Lock\nWave", color= "black"];
+    copa [label = "Copa"];
+    compress [label = "Compress", color= "black"];
+    
     //6-step moves======================================================
     node [shape = doublecircle]; 
     //-----------------------------------------------------------
@@ -42,12 +49,7 @@ digraph finite_state_machine {
     embrace                   [label = "embrace", color= "black"];
     flick_right_turn          [label = "Arm-Lock-Flick\nRight-Turn", color= "black"];
     
-    //3-step moves======================================================
-    node [shape = circle, style=""]; 
-    //-----------------------------------------------------------
-    //hammer_lock_wave          [label = "Hammer-Lock\nWave", color= "black"];
-    copa [label = "Copa"];
-    compress [label = "Compress", color= "black"];
+
         
     //-----------------------------------------------------------
     closed_hold -> rocking_step;
@@ -62,6 +64,14 @@ digraph finite_state_machine {
     cross_body -> open_hold_lr;
     cross_body -> open_hold_rl;
     cross_body -> cross_hold_lot;
+    
+    //-----------------------------------------------------------
+    open_hold    -> cross_body;
+    open_hold_lr -> cross_body;
+    open_hold_rl -> cross_body;
+    open_hold_rr -> cross_body;
+    open_hold_ll -> cross_body;
+    
     
     //-----------------------------------------------------------
     rocking_step -> closed_hold;
@@ -106,6 +116,7 @@ digraph finite_state_machine {
     open_hold_rr -> cross_body_s_sturn_two_half_turn;
     open_hold_rr -> double_spin_right_to_right; 
     open_hold_rr -> copa;
+
     
     //-----------------------------------------------------------    
     copa -> follower_check_east;
