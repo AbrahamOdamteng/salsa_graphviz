@@ -29,16 +29,20 @@ digraph finite_state_machine {
     //3-step moves======================================================
     node [shape = circle, style=""]; 
     //-----------------------------------------------------------
-    //hammer_lock_wave          [label = "Hammer-Lock\nWave", color= "black"];
-    copa [label = "Copa"];
-    compress [label = "Compress", color= "black"];
-    check_twist [label = "Check Twist", color= "black"];
+    //hammer_lock_wave[label = "Hammer-Lock\nWave", color= "black"];
+    copa              [label = "Copa"];
+    compress          [label = "Compress", color= "red"];
+    check_twist       [label = "Check Twist", color= "black"];
+    check_s_turn      [label = "Check S-Turm", color= "red"];
+    check_into_hammer [label = "Check into Hammer", color= "red"];
     
     //6-step moves===============================================
     node                            [shape = doublecircle]; 
     
     cross_body                      [label = "Cross Body"] 
     rocking_step                    [label = "Rocking\nStep"];
+    cross_body_inside_turn_1        [label = "Inside Turn\n(1.5 Turn)"];
+    cross_body_inside_turn_2        [label = "Inside Turn\n(2.5 Turn)"];
     
     cross_pass_waist                [label = "Cross Pass\n(waist)"] 
     cross_pass_shoulder             [label = "Cross Pass\n(shoulder)"] 
@@ -55,7 +59,7 @@ digraph finite_state_machine {
     cross_body_s_sturn_one_half_turn[label = "Cross Body S-Turn\n(1.5 Turn)", color= "black"];
     cross_body_s_sturn_two_half_turn[label = "Cross Body S-Turn\n(2.5 Turn)", color= "black"];
     s_turn                          [label = "S-Turn", color= "black"];
-    copa_s_turn                     [label = "Copa\nS-Turn", color= "black"];
+    copa_s_turn                     [label = "Copa\nS-Turn", color= "red"];
     
     round_the_world                 [label = "Round\nthe World"];
     lasoo                           [label = "Lasoo", color= "black"];
@@ -73,6 +77,8 @@ digraph finite_state_machine {
     closed_hold -> cross_pass_waist;
     closed_hold -> cross_pass_shoulder;
     closed_hold -> cross_pass_head;
+    closed_hold -> cross_body_inside_turn_1;
+    closed_hold -> cross_body_inside_turn_2;
     
     //-----------------------------------------------------------
     cross_body -> closed_hold;
@@ -89,7 +95,6 @@ digraph finite_state_machine {
     open_hold_rl -> cross_body;
     open_hold_rr -> cross_body;
     open_hold_ll -> cross_body;
-    
     
     //-----------------------------------------------------------
     rocking_step -> closed_hold;
@@ -146,6 +151,14 @@ digraph finite_state_machine {
     //-----------------------------------------------------------    
     follower_check_east -> compress;
     follower_check_east -> check_twist;
+    follower_check_east -> check_s_turn;
+    follower_check_east -> check_into_hammer;
+
+    //-----------------------------------------------------------
+    cross_body_inside_turn_1 -> open_hold_lr;
+    cross_body_inside_turn_1 -> hammer_lock_left_to_right;
+    cross_body_inside_turn_2 -> open_hold_lr;
+    cross_body_inside_turn_2 -> hammer_lock_left_to_right;
     
     open_hold_ll -> s_turn [color="black"];
     open_hold_lr -> cross_body_s_sturn_one_half_turn [color="black"];
@@ -174,7 +187,8 @@ digraph finite_state_machine {
     lasoo               -> open_hold_rr;
     windmill            -> open_hold;
     copa_s_turn         -> hammer_lock_right_to_right;
-    
+    check_s_turn        -> hammer_lock_right_to_right;
+    check_into_hammer   -> hammer_lock_left_to_left;
     
     //hammer_lock_left_to_right -> hammer_lock_wave;
     //hammer_lock_right_to_left -> hammer_lock_wave;
