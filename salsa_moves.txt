@@ -1,0 +1,33 @@
+Mambo
+Mambo + right turn
+Mambo + Spin (Single)(Double)(Triple)
+Mambo + S-Turn
+Mambo + Arm-Lock Turn
+Mambo + Female-Check
+
+Cross-Body
+Cross-Body + Fake-Out
+Cross-Body + 180
+Cross-Body + Inside-Turn (Single)(Double)
+Cross-Body + Outside-Turn
+Cross-Body + Hammer-Lock Turn
+Cross-Body + Hammer-Lock Pull
+Cross-Body + Female-Check
+
+Rocking-Step
+Rocking-Step + Inside-Turn (Single)(Double)
+
+Copa + S-Turn (Single)(Double)
+Copa + Round-The-World
+Copa + Lasoo
+Copa + Embrace 
+Copa + U-turn
+Copa + Female-Check
+Copa + Male-Check
+
+Female-Check + S-Turn
+
+Hammer-Lock + Wave
+Hammer-Lock + ClockWise-Turn
+
+Embrace + Unwind
